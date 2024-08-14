@@ -557,20 +557,20 @@ class ImpactMainWindow(tk.Tk):
         
         for i in range(3):    
             for j in range(3):
-                self.string_sigma[i][j].trace('w',lambda a,b,c,h=i: self.updateTwiss(h))
-                self.string_twiss[i][j].trace('w',lambda a,b,c,h=i: self.updateSigma(h))
+                self.string_sigma[i][j].trace_add('write',lambda a,b,c,h=i: self.updateTwiss(h))
+                self.string_twiss[i][j].trace_add('write',lambda a,b,c,h=i: self.updateSigma(h))
         for row in range(3):
             for column in range(3):
                 self.string_sigma[row][column].set(self.twiss_param[row][column])
                 pass
         self.updatePtcTypeLock  =0
-        self.ptcTypeComx.trace('w', self.updatePtc)
-        self.ptcMass.trace('w', self.updatePtcType)
-        self.ptcCharge.trace('w', self.updatePtcType)
+        self.ptcTypeComx.trace_add('write', self.updatePtc)
+        self.ptcMass.trace_add('write', self.updatePtcType)
+        self.ptcCharge.trace_add('write', self.updatePtcType)
         
         self.updateDistTypeLock  =0
-        self.distTypeComx.trace('w', self.updateDist)
-        self.distTypeNumb.trace('w', self.updateDistType)
+        self.distTypeComx.trace_add('write', self.updateDist)
+        self.distTypeNumb.trace_add('write', self.updateDistType)
 
         self.update()
         self.winwidth     = self.winfo_width()
