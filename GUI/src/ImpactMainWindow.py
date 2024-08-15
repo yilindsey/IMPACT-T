@@ -854,7 +854,7 @@ class ImpactMainWindow(tk.Tk):
             return
         
         if self.AccKernel=='ImpactT':
-            np = self.save('ImpactT.in')
+            # np = self.save('ImpactT.in')
             self.button_run     .config(state='disable')
             self.button_plot    .config(state='disable')
             self.button_initial .config(state='disable')
@@ -965,7 +965,8 @@ class ImpactMainWindow(tk.Tk):
             except:
                 print("Error: cannot get to the dictionary" + self.entry_dic.get())
                 return
-            np = self.save('ImpactT.in')
+            # np = self.save('ImpactT.in')
+            np = 1
             
             #ImpactExe = os.path.join(sys.path[0],'src',self.IMPACT_T_EXE)
             ImpactExe = self.IMPACT_T_EXE.get()
@@ -976,7 +977,7 @@ class ImpactMainWindow(tk.Tk):
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             # print(cmd)
             # p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
-            p=subprocess.Popen([cmd + "/ImpactTexe.exe"],stdout=subprocess.PIPE,bufsize=1)
+            p=subprocess.Popen([cmd + "/ImpactTexe"],stdout=subprocess.PIPE,bufsize=1)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
@@ -986,8 +987,9 @@ class ImpactMainWindow(tk.Tk):
             except:
                 print("Error: cannot get to the dictionary" + self.entry_dic.get())
                 return
-            np = self.save('ImpactZ.in')
-            
+            #np = self.save('ImpactZ.in')
+            np = 1
+
             #ImpactExe = os.path.join(sys.path[0],'src',_IMPACT_Z_NAME)
             ImpactExe = self.IMPACT_Z_EXE.get()
             if np==1:
@@ -995,7 +997,8 @@ class ImpactMainWindow(tk.Tk):
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             print(cmd)
-            p=subprocess.Popen(["python", cmd],stdout=subprocess.PIPE,bufsize=1)
+            # p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
+            p=subprocess.Popen([cmd + "/ImpactZexe.exe"],stdout=subprocess.PIPE,bufsize=1)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
