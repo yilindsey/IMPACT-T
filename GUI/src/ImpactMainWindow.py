@@ -98,8 +98,7 @@ class ImpactMainWindow(tk.Tk):
 
     count = 0
     AccKernel = 'ImpactT'
-    ImpactThread=threading.Thread()
-    ImpactThread.setDaemon(True)
+    ImpactThread=threading.Thread(daemon=True)
     def __init__(self, master=None):  
         tk.Tk.__init__(self, master)
         self.title("Impact")
@@ -953,8 +952,7 @@ class ImpactMainWindow(tk.Tk):
     def thread_it(self,func):
         self.button_run['state']='disabled'
         self.run_lock.acquire()
-        ImpactThread=threading.Thread(target=func)
-        ImpactThread.setDaemon(True)
+        ImpactThread=threading.Thread(target=func, daemon=True)
         ImpactThread.start()
         self.run_lock.release()
         self.button_run['state']='normal'
