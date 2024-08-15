@@ -223,7 +223,7 @@ class ImpactMainWindow(tk.Tk):
         self.button_dic.bind("<Leave>", lambda event, h=self.button_dic: h.configure(bg="#FFFFFF"))
 
         
-        
+
         """Frame2: Time step"""
         self.frame1 = tk.Frame(self.frame_left, 
                                height =_height/2, width = _width)
@@ -977,7 +977,7 @@ class ImpactMainWindow(tk.Tk):
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             print(cmd)
-            p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
+            p=subprocess.Popen(["python", cmd + "/ImpactTexe.exe"],stdout=subprocess.PIPE,bufsize=1)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
@@ -996,7 +996,7 @@ class ImpactMainWindow(tk.Tk):
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             print(cmd)
-            p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
+            p=subprocess.Popen(["python", cmd],stdout=subprocess.PIPE,bufsize=1)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
