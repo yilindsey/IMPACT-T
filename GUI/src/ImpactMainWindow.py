@@ -977,7 +977,7 @@ class ImpactMainWindow(tk.Tk):
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             print(cmd)
-            p=subprocess.Popen(["python", cmd + "/ImpactTexe.exe"],stdout=subprocess.PIPE,bufsize=1)
+            p=subprocess.Popen(["python", cmd + "/../examples/Sample2_TWS/ImpactTexe.exe"],stdout=subprocess.PIPE,bufsize=1)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
