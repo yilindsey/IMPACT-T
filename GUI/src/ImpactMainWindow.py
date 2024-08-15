@@ -854,7 +854,7 @@ class ImpactMainWindow(tk.Tk):
             return
         
         if self.AccKernel=='ImpactT':
-            # np = self.save('ImpactT.in')
+            # np = self.save('ImpactT.in')       UNCOMMENT WHEN FIXED
             self.button_run     .config(state='disable')
             self.button_plot    .config(state='disable')
             self.button_initial .config(state='disable')
@@ -866,7 +866,7 @@ class ImpactMainWindow(tk.Tk):
         elif self.AccKernel=='ImpactZ':
             print('PreProcessing cannot use at Z code')
             sys.exit()
-            #np = self.save('ImpactZ.in')
+            #np = self.save('ImpactZ.in')       UNCOMMENT WHEN FIXED
             #PreProcessing.main('Z')
         else:
             print('Cannot find kernel: '+self.AccKernel)
@@ -966,7 +966,7 @@ class ImpactMainWindow(tk.Tk):
                 print("Error: cannot get to the dictionary" + self.entry_dic.get())
                 return
             # np = self.save('ImpactT.in')
-            np = 1
+            np = 1      #DELETE WHEN FIXED
             
             #ImpactExe = os.path.join(sys.path[0],'src',self.IMPACT_T_EXE)
             ImpactExe = self.IMPACT_T_EXE.get()
@@ -977,7 +977,7 @@ class ImpactMainWindow(tk.Tk):
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             # print(cmd)
             # p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
-            p=subprocess.Popen([cmd + "/ImpactTexe"],stdout=subprocess.PIPE,bufsize=1)
+            p=subprocess.Popen([cmd + "/ImpactTexe"],stdout=subprocess.PIPE,text=True, bufsize=1)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
@@ -988,7 +988,7 @@ class ImpactMainWindow(tk.Tk):
                 print("Error: cannot get to the dictionary" + self.entry_dic.get())
                 return
             #np = self.save('ImpactZ.in')
-            np = 1
+            np = 1      #DELETE WHEN FIXED
 
             #ImpactExe = os.path.join(sys.path[0],'src',_IMPACT_Z_NAME)
             ImpactExe = self.IMPACT_Z_EXE.get()
@@ -998,7 +998,7 @@ class ImpactMainWindow(tk.Tk):
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             print(cmd)
             # p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
-            p=subprocess.Popen([cmd + "/ImpactZexe.exe"],stdout=subprocess.PIPE,bufsize=1)
+            p=subprocess.Popen([cmd + "/ImpactZexe.exe"],stdout=subprocess.PIPE,text=True,bufsize=1)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
