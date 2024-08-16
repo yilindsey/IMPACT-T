@@ -27,6 +27,8 @@ import ParticlePlot, SlicePlot
 _height=300
 _width =200
 
+sys_directory=sys.path[0] + '/'
+
 IMPACT_T_ADVANCED_PLOT_TYPE= {'Centroid location (mm)'    :2,
                      'RMS size (mm)'             :3,
                      'Centroid momentum (MC)'    :4,
@@ -179,7 +181,7 @@ class AdvancedPlotControlFrame(tk.Toplevel):
         plotWindow = tk.Toplevel(self)
         plotWindow.title(sys._getframe().f_back.f_code.co_name)
         
-        l=PlotFrame(plotWindow,'fort.18',1,y,ylabel)
+        l=PlotFrame(plotWindow,sys_directory + 'fort.18',1,y,ylabel)
         l.pack()
     
     def emitGrowthPlot(self):
@@ -206,7 +208,7 @@ class AdvancedPlotControlFrame(tk.Toplevel):
         plotWindow = tk.Toplevel(self)
         plotWindow.title(sys._getframe().f_back.f_code.co_name)
         
-        l=PlotFrame(plotWindow,'fort.28',1,4,'Live particle number')
+        l=PlotFrame(plotWindow,sys_directory + 'fort.28',1,4,'Live particle number')
         l.pack()
         
     def ParticlePlot(self):
@@ -283,7 +285,7 @@ class AdvancedPlotControlFrame(tk.Toplevel):
     def makePlot(self):
         print(self.__class__.__name__)
         
-        PlotFileName='fort.'+str(self.plotDirct.get()+24)        
+        PlotFileName=sys_directory + 'fort.'+str(self.plotDirct.get()+24)        
         yx=IMPACT_T_ADVANCED_PLOT_TYPE[self.plotType.get()]
         yl=yx if self.plotDirct.get()!=2 else yx-1
 
@@ -296,7 +298,7 @@ class AdvancedPlotControlFrame(tk.Toplevel):
 
     def maxPlot(self):
         print(self.__class__.__name__)
-        filename = 'fort.27'
+        filename = sys_directory + 'fort.27'
         try:
             t=open(filename)
             t.close()
@@ -310,7 +312,7 @@ class AdvancedPlotControlFrame(tk.Toplevel):
         l.pack() 
     def make3orderPlot(self):
         print(self.__class__.__name__)
-        filename = 'fort.29'
+        filename = sys_directory + 'fort.29'
         try:
             t=open(filename)
             t.close()
@@ -325,7 +327,7 @@ class AdvancedPlotControlFrame(tk.Toplevel):
         
     def make4orderPlot(self):
         print(self.__class__.__name__)
-        filename = 'fort.30'
+        filename = sys_directory + 'fort.30'
         try:
             t=open(filename)
             t.close()
@@ -443,28 +445,28 @@ class OverallFrame(tk.Frame):
         
         xl  = 2
         saveName.append('sizeX')
-        fileList[0]     = ['fort.24','fort.27']
+        fileList[0]     = [sys_directory + 'fort.24', sys_directory + 'fort.27']
         labelList[0]    = ['rms.X','max.X']
         xdataList[0]    = [xl,xl]
         ydataList[0]    = [4,3]
         xyLabelList[0]  = ['z direction (m)','beam size in X (mm)']
         
         saveName.append('sizeY')
-        fileList[1]     = ['fort.25','fort.27']
+        fileList[1]     = [sys_directory + 'fort.25',sys_directory + 'fort.27']
         labelList[1]    = ['rms.Y','max.Y']
         xdataList[1]    = [xl,xl]
         ydataList[1]    = [4,5]
         xyLabelList[1]  = ['z direction (m)','beam size in Y (mm)']
         
         saveName.append('sizeZ')
-        fileList[2]     = ['fort.26','fort.27']
+        fileList[2]     = [sys_directory + 'fort.26',sys_directory + 'fort.27']
         labelList[2]    = ['rms.Z','max.Z']
         xdataList[2]    = [xl,xl]
         ydataList[2]    = [3,7]
         xyLabelList[2]  = ['z direction (m)','beam size in Z (mm)']
         
         saveName.append('emitXY')
-        fileList[3]     = ['fort.24','fort.25']
+        fileList[3]     = [sys_directory + 'fort.24',sys_directory + 'fort.25']
         labelList[3]    = ['emit.nor.X','emit.nor.Y']
         xdataList[3]    = [xl,xl]
         ydataList[3]    = [8,8]
@@ -515,7 +517,7 @@ class EmitGrowthFrame(PlotBaseFrame):
         PlotBaseFrame.__init__(self, parent)
         self.plot()
     def plot(self):        
-        fileList        = ['fort.24','fort.25']
+        fileList        = [sys_directory + 'fort.24',sys_directory + 'fort.25']
         xdataList       = [2,2]
         ydataList       = [8,8]
         xyLabelList     = ['Z (m)','Avg emit growth in X and Y']
@@ -564,7 +566,7 @@ class TemperatureFrame(PlotBaseFrame):
         PlotBaseFrame.__init__(self, parent)
         self.plot()
     def plot(self):
-        arg=['ct','fort.24','fort.25','fort.26']
+        arg=['ct',sys_directory + 'fort.24',sys_directory + 'fort.25',sys_directory + 'fort.26']
         labelList= ['X','Y','Z']
         lineType = ['-','--',':']
         col      = ['b','g','r']
