@@ -971,11 +971,18 @@ class ImpactMainWindow(tk.Tk):
             ImpactExe = self.IMPACT_T_EXE.get()
             
             if np==1:
-                cmd = ImpactExe + "/ImpactTexe"
+                cmd = ImpactExe
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             # print(cmd)
-            p=subprocess.Popen(cmd,stdout=subprocess.PIPE,text=True,bufsize=1)
+            p=subprocess.Popen(cmd + "/ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1, cwd=cmd)
+            p_iter = iter(p.stdout.readline, '')
+
+            # while True:
+            #     try:
+            #         print(">>" + next(p_iter))#.rstrip())
+            #     except StopIteration:
+            #         break
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
