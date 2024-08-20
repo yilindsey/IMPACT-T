@@ -975,17 +975,16 @@ class ImpactMainWindow(tk.Tk):
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             # print(cmd)
-            p=subprocess.Popen(cmd + "/ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1, cwd=cmd)
-            p_iter = iter(p.stdout.readline, '')
+            p=subprocess.Popen("ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1, cwd=cmd)
 
-            # while True:
-            #     try:
-            #         print(">>" + next(p_iter))#.rstrip())
-            #     except StopIteration:
-            #         break
-            for line in iter(p.stdout.readline,b''):
-                print(('>>{}'.format(line.rstrip())))
+            p.stdout.seek(0, 0)
+            for line in p.stdout.readlines():
+                print(line)
+
+            # for line in iter(p.stdout.readline,b''):
+            #     print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
+
         elif self.AccKernel=='ImpactZ':
             try:
                 os.chdir(self.entry_dic.get())
