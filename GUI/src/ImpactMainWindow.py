@@ -975,14 +975,23 @@ class ImpactMainWindow(tk.Tk):
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             # print(cmd)
-            p=subprocess.Popen("ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
+            if np==1:
+                if platform == "win32":
+                    p=subprocess.Popen("ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
+                elif platform == "linux":
+                    p=subprocess.Popen("./ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
+                else:
+                    print("Error: ", platform, "is an unsupported platform")
+                    return
+            elif np>1:
+                subprocess.Popen(cmd, stdout=subprocess.PIPE,text=True,bufsize=1)
             
-            p.stdout.seek(0, 0)
-            for line in p.stdout.readlines():
-                print('>>{}'.format(line.rstrip()))
 
-            # for line in iter(p.stdout.readline,b''):
-                # print('>>{}'.format(line.rstrip()))
+            while True:
+                line = p.stdout.readline()
+                if not line:
+                    break
+                print('>>{}'.format(line.rstrip()))
             p.stdout.close()
 
         elif self.AccKernel=='ImpactZ':
@@ -999,16 +1008,24 @@ class ImpactMainWindow(tk.Tk):
                 cmd = ImpactExe
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
-            print(cmd)
-            # p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
-            p=subprocess.Popen("ImpactZexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
+
+            # print(cmd)
+            if np==1:
+                if platform == "win32":
+                    p=subprocess.Popen("ImpactZexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
+                elif platform == "linux":
+                    p=subprocess.Popen("./ImpactZexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
+                else:
+                    print("Error: ", platform, "is an unsupported platform")
+                    return
+            elif np>1:
+                subprocess.Popen(cmd, stdout=subprocess.PIPE,text=True,bufsize=1)
             
-            p.stdout.seek(0, 0)
-            for line in p.stdout.readlines():
+            while True:
+                line = p.stdout.readline()
+                if not line:
+                    break
                 print('>>{}'.format(line.rstrip()))
-            
-            # for line in iter(p.stdout.readline,b''):
-            #     print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
         else:
             print('Cannot find kernel: '+self.AccKernel)
