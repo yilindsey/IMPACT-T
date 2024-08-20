@@ -970,22 +970,14 @@ class ImpactMainWindow(tk.Tk):
             #ImpactExe = os.path.join(sys.path[0],'src',self.IMPACT_T_EXE)
             ImpactExe = self.IMPACT_T_EXE.get()
             
-            if np==1:
-                cmd = ImpactExe
-            elif np>1:
+            if np == 1 and platform == "win32":
+                cmd = "ImpactTexe"
+            elif np == 1 and platform == "linux":
+                cmd = "./ImpactTexe"
+            elif np > 1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
-            # print(cmd)
-            if np==1:
-                if platform == "win32":
-                    p=subprocess.Popen("ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
-                elif platform == "linux":
-                    p=subprocess.Popen("./ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
-                else:
-                    print("Error: ", platform, "is an unsupported platform")
-                    return
-            elif np>1:
-                subprocess.Popen(cmd, stdout=subprocess.PIPE,text=True,bufsize=1)
-            
+
+            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1, cwd=ImpactExe)
 
             while True:
                 line = p.stdout.readline()
@@ -1004,22 +996,16 @@ class ImpactMainWindow(tk.Tk):
 
             #ImpactExe = os.path.join(sys.path[0],'src',_IMPACT_Z_NAME)
             ImpactExe = self.IMPACT_Z_EXE.get()
-            if np==1:
-                cmd = ImpactExe
-            elif np>1:
-                cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
 
             # print(cmd)
-            if np==1:
-                if platform == "win32":
-                    p=subprocess.Popen("ImpactZexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
-                elif platform == "linux":
-                    p=subprocess.Popen("./ImpactZexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
-                else:
-                    print("Error: ", platform, "is an unsupported platform")
-                    return
-            elif np>1:
-                subprocess.Popen(cmd, stdout=subprocess.PIPE,text=True,bufsize=1)
+            if np == 1 and platform == "win32":
+                cmd = "ImpactZexe"
+            elif np == 1 and platform == "linux":
+                cmd = "./ImpactZexe"
+            elif np > 1:
+                cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
+
+            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1, cwd=ImpactExe)
             
             while True:
                 line = p.stdout.readline()
