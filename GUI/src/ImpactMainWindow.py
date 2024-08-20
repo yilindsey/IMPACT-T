@@ -975,8 +975,8 @@ class ImpactMainWindow(tk.Tk):
             elif np>1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             # print(cmd)
-            p=subprocess.Popen("ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1, cwd=cmd)
-
+            p=subprocess.Popen("ImpactTexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
+            
             p.stdout.seek(0, 0)
             for line in p.stdout.readlines():
                 print(line)
@@ -1001,7 +1001,7 @@ class ImpactMainWindow(tk.Tk):
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
             print(cmd)
             # p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
-            p=subprocess.Popen([cmd + "/ImpactZexe.exe"],stdout=subprocess.PIPE,text=True,bufsize=1)
+            p=subprocess.Popen("ImpactZexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
             for line in iter(p.stdout.readline,b''):
                 print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
