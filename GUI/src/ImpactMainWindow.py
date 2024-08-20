@@ -979,10 +979,10 @@ class ImpactMainWindow(tk.Tk):
             
             p.stdout.seek(0, 0)
             for line in p.stdout.readlines():
-                print(line)
+                print('>>{}'.format(line.rstrip()))
 
             # for line in iter(p.stdout.readline,b''):
-            #     print(('>>{}'.format(line.rstrip())))
+                # print('>>{}'.format(line.rstrip()))
             p.stdout.close()
 
         elif self.AccKernel=='ImpactZ':
@@ -1002,8 +1002,13 @@ class ImpactMainWindow(tk.Tk):
             print(cmd)
             # p=subprocess.Popen(cmd,stdout=subprocess.PIPE,bufsize=1)
             p=subprocess.Popen("ImpactZexe",stdout=subprocess.PIPE,text=True,bufsize=1,cwd=cmd)
-            for line in iter(p.stdout.readline,b''):
-                print(('>>{}'.format(line.rstrip())))
+            
+            p.stdout.seek(0, 0)
+            for line in p.stdout.readlines():
+                print('>>{}'.format(line.rstrip()))
+            
+            # for line in iter(p.stdout.readline,b''):
+            #     print(('>>{}'.format(line.rstrip())))
             p.stdout.close()
         else:
             print('Cannot find kernel: '+self.AccKernel)
