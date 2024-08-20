@@ -208,7 +208,7 @@ class ImpactMainWindow(tk.Tk):
         self.label_exePat.pack(side='left')
         self.entry_exePath = tk.Entry(self.frame_input1, width=45,textvariable='ImpactTexe')
         self.IMPACT_T_EXE = self.entry_exePath 
-        self.entry_exePath.insert(0, sys.path[0])
+        self.entry_exePath.insert(0, sys.path[0] + "/ImpactTexe.exe")
         self.entry_exePath.pack(side='left')
 
 
@@ -970,14 +970,12 @@ class ImpactMainWindow(tk.Tk):
             #ImpactExe = os.path.join(sys.path[0],'src',self.IMPACT_T_EXE)
             ImpactExe = self.IMPACT_T_EXE.get()
             
-            if np == 1 and platform == "win32":
-                cmd = "ImpactTexe"
-            elif np == 1 and platform == "linux":
-                cmd = "./ImpactTexe"
+            if np == 1:
+                cmd = ImpactExe
             elif np > 1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
 
-            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1, cwd=ImpactExe)
+            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
 
             while True:
                 line = p.stdout.readline()
@@ -998,14 +996,12 @@ class ImpactMainWindow(tk.Tk):
             ImpactExe = self.IMPACT_Z_EXE.get()
 
             # print(cmd)
-            if np == 1 and platform == "win32":
-                cmd = "ImpactZexe"
-            elif np == 1 and platform == "linux":
-                cmd = "./ImpactZexe"
+            if np == 1:
+                cmd = ImpactExe
             elif np > 1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
 
-            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1, cwd=ImpactExe)
+            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
             
             while True:
                 line = p.stdout.readline()
