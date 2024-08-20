@@ -1,8 +1,9 @@
 def runGUI():
   
+  import os;
   import sys; 
-  if not "./src/" in sys.path:
-      sys.path.append("./src/") 
+  if not "./src/" in sys.path[0]:
+      sys.path.append(os.path.join(sys.path[0], "src"))
   if not 'ImpactMainWindow' in sys.modules:
       ImpactMainWindow = __import__('ImpactMainWindow')
   else:
