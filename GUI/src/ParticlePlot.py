@@ -133,8 +133,8 @@ class ParticleBaseFrame(tk.Frame):
         self.button_ppc["command"]      = self.plot
         self.button_ppc.pack(fill = 'both',expand =1,side = 'right')
         
-        self.ppc1Value.trace('w',lambda a,b,c,direc='X': self.update(direc))
-        self.ppc2Value.trace('w',lambda a,b,c,direc='Y': self.update(direc))
+        self.ppc1Value.trace_add('write',lambda a,b,c,direc='X': self.update(direc))
+        self.ppc2Value.trace_add('write',lambda a,b,c,direc='Y': self.update(direc))
 
         x   = self.ParticleDirec[self.ppc1.get()]
         y   = self.ParticleDirec[self.ppc2.get()]
