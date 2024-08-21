@@ -208,7 +208,7 @@ class ImpactMainWindow(tk.Tk):
         self.label_exePat.pack(side='left')
         self.entry_exePath = tk.Entry(self.frame_input1, width=45,textvariable='ImpactTexe')
         self.IMPACT_T_EXE = self.entry_exePath 
-        self.entry_exePath.insert(0, sys.path[0] + "/ImpactTexe.exe")
+        self.entry_exePath.insert(0, os.path.join(sys.path[0],"ImpactTexe.exe"))
         self.entry_exePath.pack(side='left')
 
 
@@ -995,7 +995,6 @@ class ImpactMainWindow(tk.Tk):
             #ImpactExe = os.path.join(sys.path[0],'src',_IMPACT_Z_NAME)
             ImpactExe = self.IMPACT_Z_EXE.get()
 
-            # print(cmd)
             if np == 1:
                 cmd = ImpactExe
             elif np > 1:
