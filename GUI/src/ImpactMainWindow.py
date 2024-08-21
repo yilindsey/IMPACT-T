@@ -969,46 +969,6 @@ class ImpactMainWindow(tk.Tk):
             
             #ImpactExe = os.path.join(sys.path[0],'src',self.IMPACT_T_EXE)
             ImpactExe = self.IMPACT_T_EXE.get()
-            
-            if np == 1:
-                cmd = ImpactExe
-            elif np > 1:
-                cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
-
-            if platform == "win32":
-                try:
-                    p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
-
-                    while True:
-                        line = p.stdout.readline()
-                        if not line:
-                            break
-                        print('>>{}'.format(line.rstrip()))
-                    p.stdout.close()
-                
-                except WindowsError as e:
-                    if e.winerror == 5:
-                        print("Error: please enter the executable address, not the directory address")
-                    elif e.winerror == 2:
-                        print("Error: executable file address incorrect")
-                    elif e.winerror == 87:
-                        print("Error: please specify executable address")
-                    else:
-                        print("Error: WinError ", e.winerror)
-
-            elif platform == "linux" or "linux2":
-                try:
-                    p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
-
-                    while True:
-                        line = p.stdout.readline()
-                        if not line:
-                            break
-                        print('>>{}'.format(line.rstrip()))
-                    p.stdout.close()
-                    
-                except PermissionError:
-                    print("Error: please enter the executable address, not the directory address")
 
         elif self.AccKernel=='ImpactZ':
             try:
@@ -1018,14 +978,19 @@ class ImpactMainWindow(tk.Tk):
                 return
             np = self.save('ImpactZ.in')
 
-            #ImpactExe = os.path.join(sys.path[0],'src',_IMPACT_Z_NAME)
+            #ImpactExe = os.path.join(sys.path[0],'src',_IMPACT_Z_EXE)
             ImpactExe = self.IMPACT_Z_EXE.get()
+            
+        else:
+            print('Cannot find kernel: '+self.AccKernel)
+            return
 
-            if np == 1:
-                cmd = ImpactExe
-            elif np > 1:
-                cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
+        if np == 1:
+            cmd = ImpactExe
+        elif np > 1:
+            cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
 
+        if platform == "win32":
             try:
                 p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
 
@@ -1045,9 +1010,20 @@ class ImpactMainWindow(tk.Tk):
                     print("Error: please specify executable address")
                 else:
                     print("Error: WinError ", e.winerror)
-            
-        else:
-            print('Cannot find kernel: '+self.AccKernel)
+
+        elif platform == "linux" or "linux2":
+            try:
+                p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
+
+                while True:
+                    line = p.stdout.readline()
+                    if not line:
+                        break
+                    print('>>{}'.format(line.rstrip()))
+                p.stdout.close()
+
+            except PermissionError:
+                print("Error: please enter the executable address, not the directory address")
   
     def validate(self, action, index, value_if_allowed,
                        prior_value, text, validation_type, trigger_type, widget_name):
