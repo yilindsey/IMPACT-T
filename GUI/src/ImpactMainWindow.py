@@ -208,7 +208,7 @@ class ImpactMainWindow(tk.Tk):
         self.label_exePat.pack(side='left')
         self.entry_exePath = tk.Entry(self.frame_input1, width=45,textvariable='ImpactTexe')
         self.IMPACT_T_EXE = self.entry_exePath 
-        self.entry_exePath.insert(0, os.path.join(sys.path[0],"ImpactTexe.exe"))
+        # self.entry_exePath.insert(0, sys.path[0])
         self.entry_exePath.pack(side='left')
 
 
@@ -975,14 +975,25 @@ class ImpactMainWindow(tk.Tk):
             elif np > 1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
 
-            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
+            try:
+                p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
 
-            while True:
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print('>>{}'.format(line.rstrip()))
-            p.stdout.close()
+                while True:
+                    line = p.stdout.readline()
+                    if not line:
+                        break
+                    print('>>{}'.format(line.rstrip()))
+                p.stdout.close()
+            
+            except WindowsError as e:
+                if e.winerror == 5:
+                    print("Error: please enter the executable address, not the directory address")
+                elif e.winerror == 2:
+                    print("Error: executable file address incorrect")
+                elif e.winerror == 87:
+                    print("Error: please specify executable address")
+                else:
+                    print("Error: WinError ", e.winerror)
 
         elif self.AccKernel=='ImpactZ':
             try:
@@ -1000,14 +1011,26 @@ class ImpactMainWindow(tk.Tk):
             elif np > 1:
                 cmd = self.MPI_EXE.get()+' -n '+str(np)+' '+ImpactExe
 
-            p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
+            try:
+                p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
+
+                while True:
+                    line = p.stdout.readline()
+                    if not line:
+                        break
+                    print('>>{}'.format(line.rstrip()))
+                p.stdout.close()
             
-            while True:
-                line = p.stdout.readline()
-                if not line:
-                    break
-                print('>>{}'.format(line.rstrip()))
-            p.stdout.close()
+            except WindowsError as e:
+                if e.winerror == 5:
+                    print("Error: please enter the executable address, not the directory address")
+                elif e.winerror == 2:
+                    print("Error: executable file address incorrect")
+                elif e.winerror == 87:
+                    print("Error: please specify executable address")
+                else:
+                    print("Error: WinError ", e.winerror)
+            
         else:
             print('Cannot find kernel: '+self.AccKernel)
   
