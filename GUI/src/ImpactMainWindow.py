@@ -995,16 +995,20 @@ class ImpactMainWindow(tk.Tk):
                         print("Error: please specify executable address")
                     else:
                         print("Error: WinError ", e.winerror)
-                        
-            elif platform == "linux" or "linux2":
-                p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
 
-                while True:
-                    line = p.stdout.readline()
-                    if not line:
-                        break
-                    print('>>{}'.format(line.rstrip()))
-                p.stdout.close()
+            elif platform == "linux" or "linux2":
+                try:
+                    p=subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize = 1)
+
+                    while True:
+                        line = p.stdout.readline()
+                        if not line:
+                            break
+                        print('>>{}'.format(line.rstrip()))
+                    p.stdout.close()
+                    
+                except PermissionError:
+                    print("Error: please enter the executable address, not the directory address")
 
         elif self.AccKernel=='ImpactZ':
             try:
